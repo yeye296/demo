@@ -1,16 +1,14 @@
-FROM node:20-bookworm-slim
+FROM node:alpine3.20
 
-WORKDIR /app
+WORKDIR /tmp
 
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+COPY index.js package.json ./
 
-COPY package*.json ./
-RUN npm install
+EXPOSE 3000/tcp
 
-COPY . .
-
-EXPOSE 3000
+RUN apk update && apk upgrade &&\
+    apk add --no-cache bash openssl curl gcompat iproute2 coreutils &&\
+    chmod +x index.js &&\
+    npm install
 
 CMD ["node", "index.js"]
