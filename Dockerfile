@@ -2,7 +2,7 @@ FROM node:24-slim
 
 WORKDIR /tmp
 
-COPY index.js index.html package.json ./
+COPY index.js package.json ./
 
 EXPOSE 3000/tcp
 
